@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useReducer } from 'react';
+import React, { useRef, useCallback, useReducer } from 'react';
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
@@ -22,11 +22,12 @@ function todoReducer(todos, action) {
       return todos.concat(action.todo);
     case 'ROMOVE': //제거
       // { type : 'REMOVE', id : 1}
-      return todos.filter(todo => todo.id !== action.id);
+      return todos.filter((todo) => todo.id !== action.id);
     case 'TOGGLE': //토글
       // { type : 'REMOVE' , id : 1}
-      return todos.map(todo => todo.id === action.id ? { ...todo, checked: !todo.checked } :
-        todo);
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, checked: !todo.checked } : todo,
+      );
     default:
       return todos;
   }
@@ -39,31 +40,30 @@ const App = () => {
   // ref를 사용하여 변수 담기
   const nextId = useRef(2501);
 
-  const onInsert = useCallback(
-    text => {
-      const todo = {
-        id: nextId.current,
-        text,
-        checked: false,
-      };
-      dispatch({ type: 'INSERT, todo' });
-      nextId.current += 1;// nextId 1씩 더하기
-    }, []);
+  const onInsert = useCallback((text) => {
+    const todo = {
+      id: nextId.current,
+      text,
+      checked: false,
+    };
+    dispatch({ type: 'INSERT, todo' });
+    nextId.current += 1; // nextId 1씩 더하기
+  }, []);
 
-  const onRemove = useCallback(
-    id => {
-      dispatch({ type: 'REMOVE', id });
-    }, []);
+  const onRemove = useCallback((id) => {
+    dispatch({ type: 'REMOVE', id });
+  }, []);
 
-  const onToggle = useCallback(
-    id => {
-      dispatch({ type: 'TOGGLE', id });
-    }, []);
+  const onToggle = useCallback((id) => {
+    dispatch({ type: 'TOGGLE', id });
+  }, []);
 
-  return <TodoTemplate>
-    <TodoInsert onInsert={onInsert} />
-    <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
-  </TodoTemplate>;
+  return (
+    <TodoTemplate>
+      <TodoInsert onInsert={onInsert} />
+      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
+    </TodoTemplate>
+  );
 };
 
 export default App;
