@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useReducer } from 'react';
+import React, { useState, useRef, useCallback, useReducer } from 'react';
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
@@ -46,7 +46,7 @@ const App = () => {
       text,
       checked: false,
     };
-    dispatch({ type: 'INSERT, todo' });
+    dispatch({ type: 'INSERT', todo });
     nextId.current += 1; // nextId 1씩 더하기
   }, []);
 
